@@ -6,29 +6,7 @@
 
 Version 2.0 DRAFT
 
-# 
 
-# 
-
-**[Leistungsstarke Software-Teams	3](\#leistungsstarke-software-teams)**
-
-[Du brauchst Rebaze Pro	4](\#du-brauchst-rebaze-pro)
-
-[Was genau ist Rebaze Pro?	5](\#was-genau-ist-rebaze-pro?)
-
-[Welche Probleme löst Rebaze Pro?	5](\#welche-probleme-löst-rebaze-pro?)
-
-[Was ist in Rebaze Pro enthalten?	7](\#was-ist-in-rebaze-pro-enthalten?)
-
-[Das Rebaze System	9](\#das-rebaze-system)
-
-[**Das Wingman-Prinzip	10**](\#das-wingman-prinzip)
-
-[Das Problem mit klassischen Consulting	10](\#das-problem-mit-klassischen-consulting)
-
-# 
-
-# 
 
 # Leistungsstarke Software-Teams  {#leistungsstarke-software-teams}
 
@@ -45,8 +23,6 @@ Ein leistungsfähiges Software Team fühlt sich sicher. Eine positive Fehlerkult
 Ein leistungsfähiges Software Team liefert regelmäßigen Mehrwert statt Big-Bang (vielleicht) alle paar Jahre.
 
 Ein leistungsfähiges Software Team hat einen sehr hohen Qualitätsanspruch. Hohe Qualität erlaubt eine höhere Geschwindigkeit, weniger technische Schulden und am Ende natürlich das bessere Produkt.
-
-# 
 
 # Du brauchst Rebaze Pro {#du-brauchst-rebaze-pro}
 
@@ -66,8 +42,6 @@ Mit klarem Fokus auf Euren Produkterfolg bringen wir Klarheit & Geschwindigkeit 
 - Kraft und Schwung: Wir sind nicht nur gesichtslose Experten. Wir arbeiten mit Leidenschaft & Humor. Das gibt uns allen mehr Energie.
 
 **Rebaze Pro ist dein Wingman-Abo für DevOps. Jetzt Verfügbarkeit anfragen\!**
-
-## 
 
 # Was genau ist Rebaze Pro? {#was-genau-ist-rebaze-pro?}
 
@@ -90,8 +64,6 @@ Mit Rebaze Pro bekommt ein Entwickler:in oder DevOps-Lead ein Experten-Sparring 
 | **3\. Skalierungsprobleme und ineffiziente Ressourcennutzung**  Mittelständische Unternehmen, die wachsen oder saisonale Spitzen bewältigen müssen, haben oft Schwierigkeiten, ihre IT-Infrastruktur schnell und effizient zu skalieren.  Traditionelle Ansätze führen zu Überprovisionierung oder zu Engpässen, was die Betriebskosten in die Höhe treibt. Wo fangen wir an? | DevOps fördert die enge Zusammenarbeit zwischen Entwicklung und IT-Betrieb und ermöglicht durch Automatisierung (z. B. CI/CD-Pipelines) eine schnellere und kontinuierliche Bereitstellung von Software. Dies verkürzt die Time-to-Market und ermöglicht es dem Unternehmen, schneller auf Kundenanforderungen und Marktveränderungen zu reagieren. |
 | **4\. Die IT-Organisation gibt Kernkompetenzen an externe Berater ab** Traditionelle T\&M-Dienstleister haben wenig Grüne, effizienter zu arbeiten, da Mehraufwände meistens widerstandslos vergütet werden Die Umsetzung durch externe Dienstleister  | Der Wingman-Ansatz erlaubt die intensive Beratung, ohne Kompetenzen aufzugeben  |
 
-# 
-
 ## Was ist in Rebaze Pro enthalten? {#was-ist-in-rebaze-pro-enthalten?}
 
 | Entwickler- und Sysops Interviews | Zu Beginn werden Entwickler und IT-Betrieb nach dem Status Quo befragt. Erste Erkenntnisse zur Maturität der Software-Auslieferungsprozesse (Release, Deployment) werden frühzeitig gewinnen. Mitarbeiter komment direkt in den Kontakt mit ihren zukünftigen Sparrings-Partnern  |
@@ -101,7 +73,6 @@ Mit Rebaze Pro bekommt ein Entwickler:in oder DevOps-Lead ein Experten-Sparring 
 | **Ansprechpartner via Chat-Kommunikation ** *Der Flow ist uns allen wichtig.  Mit Rebaze Pro bekommst du einen eigenen Kanal, in dem Fragen direkt gestellt und beantwortet werden können.  Einfach, Intuitiv & Persönlich.*    | *Der Flow ist uns allen wichtig.  Mit Rebaze Pro bekommst du einen eigenen Kanal wie z.B. in Slack, in dem Fragen direkt gestellt und beantwortet werden können.*  Kommunikation ohne den Arbeitsfluss zu unterbrechen Schriftliche Kommunikation, durchsuchbar, referenzierbar, dokumentiert und geloggt. Für immer. |
 | **(DevOps Retrospektive) ** *Es geht um die Zusammenarbeit innerhalb der Software Organisation. Regelmäßig treffen wir uns in einer größeren Runde zur Retrospektive mit Entwicklung und IT-Betrieb.* | Vorhandene Engineers bekommen geballte Erfahrung an die Hand Wissen und Können werden im Unternehmen aufgebaut Auf persönlicher Ebene werden auch unausgesprochene Hürden erkannt und angepackt |
 
-## 
 
 # Das Rebaze System {#das-rebaze-system}
 
