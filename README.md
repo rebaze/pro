@@ -20,7 +20,7 @@ kurzfristig verfügbar machen und damit die Leistung deines Entwicklungsteams na
 
 🚀 Das ist Rebaze Pro: Die effiziente DevOps Begleitung im Wingman-Stil.
 
-Du bekommst im monatlichen Abo
+Du bekommst im [monatlichen Abo](details.md)
 * 💪🏼 DevOps 1:1 Sparrings 
 * 🎯 Briefings für das Tech-Leadership
 * 📡 Den heißen Draht zum DevOps Experten
