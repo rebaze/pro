@@ -13,7 +13,8 @@ Stell dir vor du kannst die geballte Erfahrungen aus Unternehmen wie
 * Lufthansa
 * Sonatype
 * IBM 
-* EY 
+* EY
+  
 kurzfristig verfügbar machen und damit die Leistung deines Entwicklungsteams nachhaltig verbessern.
 
 🦾 Genau wie ein Personal Trainer im High-End Fitnesstraining.
@@ -32,7 +33,7 @@ Dank Wingman-Stil ist das ganze
 
 Cool oder?
 
-Vernetze dich und schreib mir!
+Vernetze dich gerne auf: [https://www.linkedin.com/in/tonit/](LinkedIn) und wir sprechen.
 
 Ich freue mich auf dich!
 
