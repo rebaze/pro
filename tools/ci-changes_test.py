@@ -53,7 +53,7 @@ class ChangesTest(unittest.TestCase):
                 self.assertEqual(
                     result["python"],
                     str(
-                        path.endswith(("/ci.yaml", "/dependabot-auto-merge.yaml"))
+                        path.endswith(("/ci.yaml", "/dependabot-auto-merge.yaml", "/release.yaml"))
                     ).lower(),
                 )
 

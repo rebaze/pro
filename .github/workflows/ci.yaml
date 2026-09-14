@@ -67,7 +67,7 @@ jobs:
           if grep -E '^\.github/workflows/.*\.ya?ml$' <<<"$CHANGED" >/dev/null; then go=true; fi
           if grep -E '^\.goreleaser\.yaml$' <<<"$CHANGED" >/dev/null; then goreleaser=true; fi
           if grep -E '\.sh$' <<<"$CHANGED" >/dev/null; then shell=true; fi
-          if grep -E '(\.py$|^\.github/workflows/dependabot-auto-merge\.yaml$)' <<<"$CHANGED" >/dev/null; then python=true; fi
+          if grep -E '(\.py$|^\.github/workflows/(dependabot-auto-merge|release)\.yaml$)' <<<"$CHANGED" >/dev/null; then python=true; fi
           if grep -E '^\.github/workflows/ci\.yaml$' <<<"$CHANGED" >/dev/null; then go=true; goreleaser=true; shell=true; python=true; fi
           echo "go=$go" >> "$GITHUB_OUTPUT"
           echo "goreleaser=$goreleaser" >> "$GITHUB_OUTPUT"
@@ -179,6 +179,7 @@ jobs:
           python3 tools/build-p2-table_test.py
           python3 tools/dependabot-auto-merge_test.py
           python3 tools/ci-changes_test.py
+          python3 tools/release-publish_test.py
 
       - name: Install GoReleaser
         if: steps.changes.outputs.goreleaser == 'true'

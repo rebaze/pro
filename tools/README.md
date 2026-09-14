@@ -362,3 +362,86 @@ is published.
 `python3 tools/ci-changes_test.py` checks that edits to every workflow and either module
 trigger the Go checks. It also verifies the narrower triggers for the other CI checks.
 Like the merge-policy tests, it runs offline and is included in CI's Python tests.
+
+## Verify release assets before publication
+
+`release-publish.py` is the publication guard used by Rio's own release workflow
+([issue #51](https://github.com/rebaze/rio/issues/51)). It requires Python 3.9+, `gh` and
+`cosign`; the workflow supplies GitHub credentials and pins its signing tools.
+
+The workflow builds with GoReleaser's `--skip=publish,announce,homebrew`. It then stages
+archives, their checksums and signature, the source CycloneDX SBOM, and the changelog.
+The staging command writes a SHA-256 inventory last and refuses existing output paths,
+so an interrupted run cannot silently reuse an earlier inventory.
+
+```sh
+python3 tools/release-publish.py stage \
+  --dist dist --stage release-assets --inventory release-inventory.json \
+  --tag "$TAG" --repo "$GITHUB_REPOSITORY"
+```
+
+The GitHub attestation actions consume these staged files. The workflow combines their
+bundles into `release-attestations.jsonl`, outside the frozen asset directory, then runs:
+
+```sh
+python3 tools/release-publish.py publish \
+  --stage release-assets --inventory release-inventory.json \
+  --bundle release-attestations.jsonl --tag "$TAG" --repo "$GITHUB_REPOSITORY"
+```
+
+Before creating a draft, the guard checks the asset inventory, archive checksums, both
+provenance and CycloneDX attestations for each archive, provenance for the checksum file,
+and the checksum signature. It constrains the signer to this repository's release workflow
+at the requested tag. The verified CycloneDX predicate must match the staged source SBOM.
+The source SBOM describes the repository; attaching it to an archive does not establish a
+complete inventory of that archive's assembled binary.
+
+Verification and upload use the same private copy of the staged bytes. The guard downloads
+the draft's assets and compares their names and SHA-256 digests before publishing the
+identified draft. Homebrew runs only after successful publication and receives the staged
+checksums. Prereleases keep their prerelease designation and do not update the tap.
+
+An existing release **or draft** for the tag blocks creation. Lookup and verification errors
+also block it. Failure after draft creation leaves the draft unpublished; the tool never
+deletes tags, replaces assets, or recreates a release. Inspect the failure and use a new patch
+tag for a corrected release. Do not rerun this tool to overwrite an existing tag's release.
+The workflow serializes runs per tag. Its credentials, staging directory, inventory and
+other release writers remain a trust boundary: this is not protection against an administrator
+or another authorized process deliberately changing a draft during the final API calls.
+
+### Run the offline terminal demo
+
+```sh
+python3 tools/demo-release-gate.py --out /tmp/rio-release-demo
+python3 tools/release-publish_test.py
+```
+
+Use a new output directory for each run. The demo executes the production guard with synthetic
+files and explicit offline substitutes for GitHub and signature verification. It performs real
+hashing, inventory checks, byte comparisons and publication decisions, but does not authenticate
+signatures or create a GitHub release. Four cases show an unchanged candidate proceeding and
+replaced bytes, missing attestations and rejected verification stopping publication.
+
+The output directory retains each scenario's files, inventories, service-call log, exact shell
+commands, raw output, `results.json`, and a structured JSON/text transcript. The guided recording
+inspects real demo archives, records fingerprints, and confirms publication side effects. The `remote/` directory and `published`
+marker are the offline publisher's observable output. The fixtures live under
+`tools/testdata/release/`; they must never be used as production verification tools.
+
+To render that actual transcript as a short captioned MP4, install Pillow in a Python environment
+and make `ffmpeg` available, then run:
+
+```sh
+python3 tools/render-release-demo.py \
+  /tmp/rio-release-demo/transcript.json /tmp/rio-release-demo.mp4
+```
+
+The renderer uses Menlo on macOS or DejaVu Sans Mono on Linux; `--font /path/to/font.ttf`
+selects another monospace font. On macOS, add `--voice Samantha` for spoken explanations.
+Each case has a setup card, animated typing of the full commands, captured output, an explanation
+and a distinct end card. MP4 chapters allow navigation between cases. The renderer writes scene
+PNGs and a timeline alongside the video for visual inspection.
+Only the optional renderer needs Pillow and ffmpeg; the demo and guard tests use the standard
+Python library (the demo also uses bash, tar and shasum). The video preserves command output
+and slows playback for reading; it clearly labels the offline service substitutes. Commands remain
+on screen above their output. Version 2 transcripts require a fresh run of the demo capture command.
