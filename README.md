@@ -7,8 +7,12 @@
 [![Go](https://img.shields.io/github/go-mod/go-version/rebaze/rio)](go.mod)
 [![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/rebaze/rio/badge)](https://scorecard.dev/viewer/?uri=github.com/rebaze/rio)
 
-rio is an open-source evidence compiler. It turns engineering evidence into structured,
-customer-owned records against an explicit output contract.
+rio is an open-source evidence compiler for software delivery. It turns supported engineering
+inputs into structured, customer-owned records with explicit checks, sources and gaps.
+
+The goal is to make check results useful for release decisions: which exact artifact was checked,
+which requirements the results cover, and what remains missing or needs an authorized exception.
+rio compiles the supported evidence; the surrounding release process enforces the release rules.
 
 Today, rio compiles **SBOM normalization records**: it reads local CycloneDX SBOMs, applies
 manifest-defined transformations, checks declared requirements, and writes normalized documents
@@ -17,15 +21,19 @@ SBOMs to a downstream tool such as DependencyTrack.
 
 ## Why it exists
 
-Software changes faster than teams can manually reconstruct and verify what happened. Evidence
-assembled by hand for each release depends on someone remembering where the inputs came from,
-which checks ran, and what their results meant. Work produced by AI agents increases the volume
-of changes, but the problem also applies to work done by humans and conventional automation.
+Coding agents increase the volume of changes, while teams still need to decide what can ship.
+A green pipeline can leave important questions unanswered: did every required check run, do its
+results belong to the artifact being released, and is an earlier exception still applicable?
 
-rio makes evidence production a repeatable part of engineering. A manifest committed next to the
-code declares the inputs and requirements. Explicit rules transform supported evidence into
-inspectable records that remain usable after the pipeline run ends. The people using those records
-may develop software themselves or integrate and consume upstream software.
+For example, tests may pass for artifact A and a later rebuild produce artifact B from the same
+source revision. The result for A does not establish that B was tested. A useful release record
+must preserve that distinction and expose the missing evidence. This is a target workflow, not a
+capability of today's SBOM normalization command.
+
+rio starts by making evidence preparation repeatable. A manifest committed next to the code
+declares the inputs and requirements. Explicit rules transform supported evidence into inspectable
+records that remain usable after the pipeline run ends. Humans can follow the sources; agents and
+downstream tools can consume the same structured facts. Missing information stays visible.
 
 The starting point is practical: SBOMs arrive at different spec versions, describe build modules
 instead of intended subjects, or carry package identities downstream tools cannot resolve. rio
@@ -68,7 +76,8 @@ behavior; [issue #4](https://github.com/rebaze/rio/issues/4) is the historical v
 
 A consumer can check an output file against its recorded digest, inspect the reported gate result,
 and see repairs and gaps. A structurally valid record can report failed checks. The gate covers
-SBOM fields, not software acceptance, vulnerability absence or compliance.
+SBOM fields, not software acceptance, vulnerability absence or compliance. rio does not add missing
+components or scan for vulnerabilities; a passing gate does not establish SBOM completeness.
 
 Unmapped components and dangling dependency references can coexist with `gate: "ok"`. A schema
 version beyond the embedded schemas produces `schemaValidated: false`, even if the gate passes.
@@ -82,28 +91,47 @@ the manifest by digest but does not embed its requirements or identify the exter
 
 ## Direction
 
-Planned work starts with a [verifiable SBOM handoff](https://github.com/rebaze/rio/issues/43),
-followed by [repair provenance](https://github.com/rebaze/rio/issues/44),
-[inspectable requirements](https://github.com/rebaze/rio/issues/45) and
-[portable retention](https://github.com/rebaze/rio/issues/46). These are planned improvements,
-not capabilities claimed by the current release.
+The next target is a release workflow that can explain which required checks belong to the exact
+candidate and refuse release when the required evidence is missing. The first product and release
+path must be validated through a [concrete consumer workflow](https://github.com/rebaze/rio/issues/47)
+before expanding the compiler's supported inputs.
 
-The longer-term direction is engineering history that stays useful after the pipeline has ended
-and the original participants have moved on. Additional evidence types and record boundaries will
-be chosen through [concrete consumer workflows](https://github.com/rebaze/rio/issues/47).
-rio does not yet compile build
-provenance, test results, acceptance events or deployment records. A build record alone would not
-establish what is currently running.
+The SBOM foundation remains a [verifiable handoff](https://github.com/rebaze/rio/issues/43),
+[repair provenance](https://github.com/rebaze/rio/issues/44),
+[inspectable requirements](https://github.com/rebaze/rio/issues/45) and
+[portable retention](https://github.com/rebaze/rio/issues/46).
+
+The proposed extension connects [an artifact to its SBOM evidence](https://github.com/rebaze/rio/issues/52),
+imports [artifact-level check results](https://github.com/rebaze/rio/issues/53), and
+[evaluates declared release requirements](https://github.com/rebaze/rio/issues/54).
+[Scoped, authorized exceptions](https://github.com/rebaze/rio/issues/55) follow once required-check
+evaluation works. A [repeatable release-gate example](https://github.com/rebaze/rio/issues/56) will
+exercise the complete path, including refusal of results for a different artifact. Independently,
+Rio's own pipeline [verifies staged assets before publication](https://github.com/rebaze/rio/issues/51);
+see the [release guard and offline demo](tools/README.md#verify-release-assets-before-publication).
+
+The compiler extensions above are planned improvements, not capabilities of the current release.
+rio does not yet compile
+build provenance, external test results, release evaluations, exceptions or deployment records.
+Engineering history remains useful beyond release decisions, but a build or release record alone
+does not establish what is currently running; deployment systems remain the source for that state.
 
 ## rio and rebaze
 
-[rebaze](https://www.rebaze.de/) delivers scoped technical work that improves a customer's evidence
-path and leaves repeatable machinery behind: configurations, adapters, identity rules, contract
-profiles and pipeline integrations. rio provides the reusable open-source compiler at the center
-of that work.
+[rebaze](https://www.rebaze.de/) implements
+[release controls](https://www.rebaze.de/release-controls/): the required checks, artifact
+associations and release rules for one product and one release path in a customer's existing
+toolchain. The implementation and operating instructions stay with the team, which can repeat the
+workflow at the next release. Business owners define requirements and authority to approve
+exceptions; those rules are enforced in the release process.
 
-You can use rio independently of rebaze services, without a hosted account. Records belong to the
-customer; humans and downstream systems use them to verify claims and make decisions.
+rio provides a reusable open-source evidence compiler for the inputs it supports within that
+workflow. A check result records what was assessed; whether the check adequately addresses a
+business risk still depends on its scope and the surrounding controls.
+
+You can use rio independently of rebaze services, without a hosted account. Working with rebaze
+does not require rio. Records belong to the customer; humans, agents and downstream systems use
+them to inspect claims and make decisions.
 
 ## Install
 
